@@ -3,16 +3,17 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
 
+from app import __version__
 from app.api import admin, auth, chat, profile, tools
 from app.auth.security import hash_password
 from app.database import SessionLocal, init_db
@@ -26,6 +27,10 @@ limiter = Limiter(key_func=get_remote_address, default_limits=[settings.RATE_LIM
 
 
 def seed_admin() -> None:
+    """Create the admin account from ADMIN_EMAIL / ADMIN_PASSWORD, if both are set."""
+    if not (settings.ADMIN_EMAIL and settings.ADMIN_PASSWORD):
+        logger.info("ADMIN_EMAIL/ADMIN_PASSWORD not set; skipping admin seeding")
+        return
     db: Session = SessionLocal()
     try:
         existing = db.query(User).filter(User.email == settings.ADMIN_EMAIL.lower()).first()
@@ -45,14 +50,12 @@ def seed_admin() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting %s…", settings.APP_NAME)
+    logger.info("Starting %s (%s)", settings.APP_NAME, settings.APP_ENV)
+    settings.check_production_safety()
     init_db()
     seed_admin()
-    # Warm RAG with safe TF-IDF first; optional FAISS/embeddings if the stack supports it
-    try:
-        rag_pipeline.initialize()
-    except Exception as exc:  # noqa: BLE001
-        logger.warning("RAG warm-up issue: %s", exc)
+    # Never raises: a failure is recorded on the pipeline and reported by /api/health.
+    rag_pipeline.initialize()
     yield
     logger.info("Shutting down %s", settings.APP_NAME)
 
@@ -63,12 +66,13 @@ app = FastAPI(
         "Intelligent Medical Chatbot with RAG over MedQuAD. "
         f"{DISCLAIMER}"
     ),
-    version="1.0.0",
+    version=__version__,
     lifespan=lifespan,
 )
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)  # applies RATE_LIMIT to every route
 
 app.add_middleware(
     CORSMiddleware,
@@ -96,12 +100,20 @@ def root():
 
 
 @app.get("/api/health")
+@limiter.exempt
 def health():
+    """Status is "ok" only when both the knowledge base and the LLM are usable."""
+    llm_ok, llm_detail = rag_pipeline.llm_health.status()
     return {
-        "status": "healthy",
-        "rag_ready": rag_pipeline.ready,
-        "documents": len(rag_pipeline.documents),
-        "llm": settings.OLLAMA_MODEL,
+        "status": "ok" if rag_pipeline.ready and llm_ok else "degraded",
+        "knowledge_base": {
+            "ready": rag_pipeline.ready,
+            "detail": rag_pipeline.error or "ok",
+            "qa_pairs": rag_pipeline.num_pairs,
+            "chunks": rag_pipeline.num_chunks,
+            "retriever": settings.RETRIEVER,
+        },
+        "llm": {"ready": llm_ok, "detail": llm_detail, "model": settings.OLLAMA_MODEL},
     }
 
 
