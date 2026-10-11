@@ -35,19 +35,33 @@ CATEGORY_KEYWORDS = {
     "Fitness": ["exercise", "workout", "fitness", "cardio", "muscle", "yoga", "stretch"],
 }
 
-EMERGENCY_PATTERNS = [
-    (r"\bchest\s+pain\b", "Chest pain can be a sign of a heart attack."),
-    (r"\b(kill\s+(my)?self|suicide|end\s+my\s+life|want\s+to\s+die)\b", "Suicidal thoughts require immediate help."),
-    (r"\b(cannot|can't|cant)\s+breathe\b", "Difficulty breathing is a medical emergency."),
-    (r"\b(baby|child|infant).{0,40}\bunconscious\b", "An unconscious infant/child needs emergency care."),
-    (r"\bunconscious\b", "Loss of consciousness is a medical emergency."),
-    (r"\b(severe|heavy)\s+bleeding\b", "Severe bleeding requires emergency care."),
-    (r"\bstroke\b.{0,20}\b(symptoms|signs|now)\b", "Possible stroke symptoms need immediate attention."),
-    (r"\bheart\s+attack\b", "Suspected heart attack requires emergency services."),
-    (r"\boverdose\b", "A possible overdose is a medical emergency."),
-    (r"\bseizure\b", "Active seizures may require emergency assistance."),
-    (r"\banalphylaxis\b|\ballergic\s+reaction\b.{0,30}\b(throat|swelling|breath)", "Severe allergic reactions need emergency care."),
+# Always treated as an emergency, however the message is phrased.
+ALWAYS_EMERGENCY = [
+    (r"\b(kill\s+(my)?self|suicid\w*|end\s+my\s+life|want\s+to\s+die|self[-\s]?harm)\b",
+     "Suicidal thoughts require immediate help."),
+    (r"\b(cannot|can't|cant|can not)\s+breathe?\b", "Difficulty breathing is a medical emergency."),
 ]
+
+# Only an emergency when the message is about someone right now ("my dad is having a
+# heart attack"), not a general question ("what is a heart attack?"). We accept some false
+# alarms ("can a baby have a seizure?") because a missed emergency is far worse.
+SITUATIONAL_EMERGENCY = [
+    (r"\bchest\s+pain\b", "Chest pain can be a sign of a heart attack."),
+    (r"\bheart\s+attack\b", "Suspected heart attack requires emergency services."),
+    (r"\bstroke\b", "Possible stroke symptoms need immediate attention."),
+    (r"\bunconscious\b|\bpassed\s+out\b|\bnot\s+breathing\b", "Loss of consciousness is a medical emergency."),
+    (r"\b(severe|heavy|uncontrolled)\s+bleeding\b", "Severe bleeding requires emergency care."),
+    (r"\boverdos\w*\b|\btook\s+too\s+many\b", "A possible overdose is a medical emergency."),
+    (r"\bseizures?\b|\bconvuls\w*\b", "Active seizures may require emergency assistance."),
+    (r"\banaphyla\w*\b|\b(throat|tongue|face)\b.{0,20}\bswell\w*\b",
+     "Severe allergic reactions need emergency care."),
+]
+
+PERSONAL_OR_URGENT = re.compile(
+    r"\b(i|i'm|im|i've|me|my|we|our|he|she|they|his|her|their|someone|somebody|baby|"
+    r"son|daughter|mom|mum|dad|mother|father|wife|husband|friend|now|right now|"
+    r"suddenly|currently|help)\b"
+)
 
 EMERGENCY_RESPONSE = """🚨 **EMERGENCY WARNING**
 
@@ -113,9 +127,13 @@ def clean_text(text: str) -> str:
 
 def detect_emergency(text: str) -> Tuple[bool, Optional[str]]:
     lowered = text.lower()
-    for pattern, reason in EMERGENCY_PATTERNS:
-        if re.search(pattern, lowered, flags=re.IGNORECASE):
+    for pattern, reason in ALWAYS_EMERGENCY:
+        if re.search(pattern, lowered):
             return True, reason
+    if PERSONAL_OR_URGENT.search(lowered):
+        for pattern, reason in SITUATIONAL_EMERGENCY:
+            if re.search(pattern, lowered):
+                return True, reason
     return False, None
 
 
