@@ -1,13 +1,13 @@
 """Tools, voice, suggestions, and bonus feature endpoints."""
 
-from typing import List, Optional
+from typing import List
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.auth import get_current_user
 from app.database import get_db
-from app.models import FavoriteResponse, MedicineReminder, Message, User
+from app.models import Chat, FavoriteResponse, MedicineReminder, Message, User
 from app.schemas import (
     BMIRequest,
     BMIResponse,
@@ -125,7 +125,12 @@ def delete_reminder(reminder_id: int, db: Session = Depends(get_db), user: User 
 
 @router.post("/favorites/{message_id}")
 def add_favorite(message_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    msg = db.query(Message).filter(Message.id == message_id).first()
+    msg = (
+        db.query(Message)
+        .join(Chat)
+        .filter(Message.id == message_id, Chat.user_id == user.id)
+        .first()
+    )
     if not msg:
         return {"detail": "Message not found"}
     existing = (

@@ -114,7 +114,12 @@ async def upload_dataset(
     db.add(log)
     db.commit()
     logger.info("Admin %s uploaded %s docs", admin.email, inserted)
-    return {"detail": f"Uploaded {inserted} documents. Rebuild FAISS index to include them in RAG."}
+    return {
+        "detail": (
+            f"Saved {inserted} documents to the database. Note: the chatbot answers from "
+            "the dataset file (DATASET_PATH), so these are not used for answers yet."
+        )
+    }
 
 
 @router.get("/logs")
