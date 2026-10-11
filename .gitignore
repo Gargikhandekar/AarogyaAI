@@ -38,9 +38,9 @@ models/
 *.pt
 *.onnx
 
-# --- Raw dataset dumps (dataset/medquad_sample.json stays tracked) -------
+# --- Datasets: generate with scripts/prepare_medquad.py (sample_qa.json stays tracked)
 dataset/raw/
-dataset/MedQuAD/
+dataset/medquad.json
 *.zip
 *.tar.gz
 

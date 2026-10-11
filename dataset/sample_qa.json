@@ -3,312 +3,312 @@
     "question": "What are the common symptoms of diabetes?",
     "answer": "Common symptoms of diabetes include increased thirst, frequent urination, unexplained weight loss, fatigue, blurred vision, slow-healing sores, and frequent infections. Type 1 diabetes symptoms often appear quickly, while Type 2 symptoms may develop gradually. Early detection and medical evaluation are important.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What causes diabetes?",
     "answer": "Diabetes is caused by the body not producing enough insulin (Type 1) or not using insulin effectively (Type 2). Risk factors for Type 2 include overweight, physical inactivity, family history, age, and certain ethnic backgrounds. Gestational diabetes can occur during pregnancy. Lifestyle and genetics both play major roles.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is hypertension?",
     "answer": "Hypertension, or high blood pressure, is a condition where the force of blood against artery walls is consistently too high. It is often called a silent condition because many people have no symptoms. Untreated hypertension increases risk of heart disease, stroke, and kidney problems. Lifestyle changes and medications can help manage it.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to reduce fever?",
     "answer": "To reduce fever, rest, stay hydrated with water or oral rehydration fluids, and dress lightly. Over-the-counter medicines such as acetaminophen (paracetamol) or ibuprofen may help if appropriate for your age and health. Seek medical care for fever in infants, fever lasting more than a few days, or fever with severe symptoms like stiff neck, confusion, or difficulty breathing.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "I have a headache. What should I do?",
     "answer": "For common tension headaches, rest in a quiet dark room, stay hydrated, apply a cool or warm compress, and consider appropriate over-the-counter pain relief. Identify triggers such as stress, caffeine withdrawal, or eye strain. Seek urgent care for sudden severe headache, headache with fever and stiff neck, neurological symptoms, or head injury.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What causes headaches?",
     "answer": "Headaches can be caused by tension, migraine, sinus problems, dehydration, lack of sleep, eye strain, caffeine changes, certain foods, or medications. Secondary headaches may result from infection, high blood pressure, or other medical conditions. Tracking triggers in a diary can help identify patterns.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is the first aid for burns?",
     "answer": "For minor burns: cool the burn under cool (not ice-cold) running water for 10–20 minutes, remove tight items near the area, cover loosely with a sterile non-stick dressing, and avoid breaking blisters. Do not apply butter, oil, or toothpaste. Seek emergency care for large, deep, chemical, electrical, or facial/hand/genital burns.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How do I perform CPR on an adult?",
     "answer": "Call emergency services first. Place the person on a firm surface. Begin chest compressions at the center of the chest: push hard and fast about 5–6 cm deep at 100–120 compressions per minute. If trained and willing, give rescue breaths (30:2 ratio). Continue until help arrives or the person shows signs of life. Formal CPR training is strongly recommended.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What should I do if someone is choking?",
     "answer": "If the person cannot breathe, cough, or speak, call emergency services. Perform abdominal thrusts (Heimlich maneuver) for conscious adults: stand behind them, place a fist above the navel, grasp with the other hand, and thrust inward and upward. For infants, use back blows and chest thrusts. Stop when the object is expelled or the person becomes unresponsive, then start CPR.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are the side effects of antibiotics?",
     "answer": "Common antibiotic side effects include nausea, diarrhea, stomach upset, and yeast infections. Some people experience allergic reactions ranging from rash to severe anaphylaxis. Antibiotics can also disrupt gut flora and contribute to resistance when misused. Always take antibiotics as prescribed and never share leftover medicines.",
     "category": "Medicines",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How should I take paracetamol safely?",
     "answer": "Paracetamol (acetaminophen) should be taken at the recommended dose for your age and weight, usually not exceeding 4 grams per day for healthy adults unless a doctor advises otherwise. Avoid combining multiple products that contain paracetamol. People with liver disease or heavy alcohol use should consult a doctor before use.",
     "category": "Medicines",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What foods are good for heart health?",
     "answer": "Heart-healthy foods include fruits, vegetables, whole grains, legumes, nuts, seeds, fatty fish rich in omega-3s, and unsaturated fats such as olive oil. Limit sodium, added sugars, processed meats, and trans fats. The Mediterranean-style eating pattern is strongly associated with cardiovascular benefits.",
     "category": "Nutrition",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are symptoms of vitamin D deficiency?",
     "answer": "Vitamin D deficiency may cause bone pain, muscle weakness, fatigue, and in severe cases soft bones (osteomalacia) or rickets in children. Many people have no obvious symptoms. Risk is higher with limited sun exposure, darker skin, older age, obesity, and certain medical conditions. Blood tests and clinician guidance determine supplementation needs.",
     "category": "Nutrition",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How much water should I drink daily?",
     "answer": "A common guideline is about 2–3 liters of total fluids per day for adults, but needs vary with climate, activity, pregnancy, and health conditions. Thirst, urine color (pale yellow), and energy levels are practical cues. People with kidney, heart, or endocrine conditions should follow personalized medical advice.",
     "category": "Nutrition",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to manage anxiety naturally?",
     "answer": "Helpful approaches include regular physical activity, consistent sleep, breathing exercises, mindfulness or meditation, limiting caffeine and alcohol, and maintaining social support. Cognitive behavioral strategies can reduce worry cycles. Persistent or severe anxiety, panic attacks, or thoughts of self-harm warrant professional mental health care.",
     "category": "Mental Health",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are signs of depression?",
     "answer": "Depression may involve persistent sadness, loss of interest, sleep or appetite changes, fatigue, difficulty concentrating, feelings of worthlessness, and sometimes thoughts of death or suicide. Symptoms lasting most of the day nearly every day for two weeks or more should prompt evaluation. Depression is treatable with therapy, lifestyle support, and when appropriate medication.",
     "category": "Mental Health",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How can I improve sleep quality?",
     "answer": "Keep a consistent sleep schedule, create a dark quiet cool bedroom, avoid screens before bed, limit caffeine late in the day, and wind down with a calming routine. Regular daytime exercise helps, but intense workouts late at night may disrupt sleep. Chronic insomnia should be discussed with a clinician.",
     "category": "Mental Health",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What exercises are safe during pregnancy?",
     "answer": "For most uncomplicated pregnancies, walking, swimming, prenatal yoga, and light strength training are considered beneficial. Avoid contact sports, scuba diving, and activities with high fall risk. Stay hydrated, avoid overheating, and stop if you feel dizzy, short of breath, or have pain. Always confirm exercise plans with your obstetric provider.",
     "category": "Pregnancy",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are early signs of pregnancy?",
     "answer": "Early signs may include a missed period, nausea, breast tenderness, fatigue, frequent urination, and food aversions. These signs are not definitive. A home pregnancy test and confirmation by a healthcare professional are the reliable ways to determine pregnancy.",
     "category": "Pregnancy",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What prenatal vitamins should I take?",
     "answer": "Prenatal vitamins typically include folic acid, iron, calcium, vitamin D, and DHA. Folic acid before and during early pregnancy helps prevent neural tube defects. Exact formulations and doses should be guided by a clinician, especially if you have dietary restrictions or medical conditions.",
     "category": "Pregnancy",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to care for a child with fever?",
     "answer": "Keep the child hydrated, dress them lightly, and monitor temperature and behavior. Use age-appropriate fever reducers if advised by a pediatrician. Seek urgent care for infants under 3 months with fever, lethargy, rash, difficulty breathing, persistent vomiting, or seizures. Never give aspirin to children unless directed by a doctor.",
     "category": "Child Care",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "When should babies get vaccinated?",
     "answer": "Infants follow a national immunization schedule that typically starts at birth with vaccines such as hepatitis B, then continues with DTP, polio, Hib, pneumococcal, rotavirus, MMR, and others at recommended ages. Schedules vary by country. Keep a vaccination record and consult a pediatrician for catch-up doses if doses are missed.",
     "category": "Child Care",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How much exercise do adults need?",
     "answer": "Adults should aim for at least 150 minutes of moderate-intensity aerobic activity per week, or 75 minutes of vigorous activity, plus muscle-strengthening activities on 2 or more days. Break activity into shorter sessions if needed. People with chronic conditions should get medical clearance before starting vigorous programs.",
     "category": "Fitness",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are benefits of yoga?",
     "answer": "Yoga can improve flexibility, balance, strength, and stress regulation. Regular practice is associated with better mood, reduced perceived stress, and support for musculoskeletal comfort. Choose styles appropriate for your fitness level and any injuries, and inform instructors about medical conditions.",
     "category": "Fitness",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are symptoms of asthma?",
     "answer": "Asthma symptoms include wheezing, shortness of breath, chest tightness, and coughing, often worse at night or with exercise, allergens, or cold air. Asthma can range from mild intermittent to severe. An action plan with controller and rescue medicines, plus trigger avoidance, is essential. Severe attacks need emergency care.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What causes high cholesterol?",
     "answer": "High cholesterol can result from diet high in saturated and trans fats, obesity, inactivity, smoking, genetics, diabetes, and certain medications. LDL cholesterol contributes to plaque buildup in arteries. Management includes diet, exercise, weight control, and sometimes statin or other lipid-lowering therapy prescribed by a clinician.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to treat a minor cut?",
     "answer": "Wash your hands, rinse the wound with clean water, apply gentle pressure to stop bleeding, apply an antibiotic ointment if appropriate, and cover with a clean bandage. Watch for signs of infection such as increasing redness, swelling, pus, or fever. Seek care for deep, dirty, or gaping wounds, or if tetanus vaccination is not up to date.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is anemia?",
     "answer": "Anemia is a condition with insufficient healthy red blood cells or hemoglobin to carry oxygen effectively. Symptoms may include fatigue, pale skin, shortness of breath, dizziness, and cold hands or feet. Iron deficiency is a common cause, but B12 deficiency, chronic disease, and blood loss are also important. Diagnosis requires blood tests.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to reduce stress?",
     "answer": "Effective stress reduction strategies include regular exercise, adequate sleep, time management, social connection, mindfulness, counseling, and limiting news overload. Short breathing breaks during the day can lower physiological arousal. Chronic stress linked to physical symptoms should be discussed with a healthcare professional.",
     "category": "Mental Health",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is a balanced diet?",
     "answer": "A balanced diet includes a variety of vegetables, fruits, whole grains, lean proteins, dairy or fortified alternatives, and healthy fats, while limiting ultra-processed foods, excess salt, and added sugars. Portion awareness and consistent meal patterns support energy and metabolic health. Individual needs differ by age, activity, and medical conditions.",
     "category": "Nutrition",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are warning signs of a stroke?",
     "answer": "Remember FAST: Face drooping, Arm weakness, Speech difficulty, Time to call emergency services. Other signs include sudden confusion, vision loss, severe headache, or loss of balance. Stroke is a medical emergency—immediate treatment improves outcomes. Do not wait to see if symptoms pass.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to lower blood pressure naturally?",
     "answer": "Helpful lifestyle measures include reducing sodium, eating a DASH-style diet rich in produce and low-fat dairy, maintaining a healthy weight, exercising regularly, limiting alcohol, quitting smoking, managing stress, and improving sleep. These measures complement—not replace—prescribed medications when needed.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is GERD?",
     "answer": "Gastroesophageal reflux disease (GERD) occurs when stomach acid frequently flows back into the esophagus, causing heartburn, regurgitation, chest discomfort, or chronic cough. Triggers may include large meals, spicy or fatty foods, caffeine, alcohol, and lying down after eating. Persistent symptoms need medical evaluation to rule out complications.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to prevent the common cold?",
     "answer": "Wash hands frequently, avoid close contact with sick people, clean shared surfaces, avoid touching your face, and stay home when ill. Adequate sleep, nutrition, and not smoking support immune health. There is no cure for the common cold; antibiotics do not help viral colds.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are symptoms of dehydration?",
     "answer": "Dehydration symptoms include thirst, dry mouth, dark urine, dizziness, fatigue, and reduced urination. Severe dehydration can cause confusion, rapid heartbeat, and fainting. Oral fluids are usually enough for mild cases; severe dehydration, especially in infants or elderly people, may need medical care.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "Is it safe to exercise with a cold?",
     "answer": "Mild cold symptoms above the neck (runny nose, mild sore throat) may allow light activity if you feel up to it. Avoid intense exercise with fever, body aches, chest congestion, or significant fatigue. Rest supports recovery and reduces risk of complications.",
     "category": "Fitness",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What should pregnant women avoid eating?",
     "answer": "Pregnant women are generally advised to avoid unpasteurized dairy, raw or undercooked meat and eggs, high-mercury fish, raw sprouts, and excess caffeine. Alcohol should be avoided. Food safety practices reduce risk of infections such as listeria. Discuss personal dietary restrictions with a prenatal provider.",
     "category": "Pregnancy",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to soothe a teething baby?",
     "answer": "Teething babies may benefit from gentle gum massage, a clean chilled teething ring, and extra comforting. Avoid numbing gels with benzocaine in young children unless a clinician advises otherwise. Fever, diarrhea, or marked irritability should not be assumed to be only teething—seek pediatric advice if concerned.",
     "category": "Child Care",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is metformin used for?",
     "answer": "Metformin is commonly prescribed for Type 2 diabetes to improve insulin sensitivity and lower blood glucose. It may also be used in related metabolic conditions under medical supervision. Side effects can include gastrointestinal upset; rare but serious lactic acidosis risk exists in certain high-risk patients. Never start or stop it without clinician guidance.",
     "category": "Medicines",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to stretch safely before workouts?",
     "answer": "Start with a light warm-up such as brisk walking, then use dynamic stretches that move joints through range of motion. Save long static holds for after exercise when muscles are warm. Stretch gently without bouncing, and stop if you feel sharp pain. Consistency matters more than extreme flexibility.",
     "category": "Fitness",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What are signs of a migraine?",
     "answer": "Migraines often involve moderate to severe throbbing pain, usually on one side of the head, with sensitivity to light and sound, nausea, and sometimes visual aura. Attacks can last hours to days. Identifying triggers and having an individualized treatment plan with a clinician can improve control.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How does smoking affect health?",
     "answer": "Smoking damages nearly every organ system. It greatly increases risk of lung cancer, COPD, heart disease, stroke, and many other cancers. Quitting at any age improves health outcomes. Support options include counseling, nicotine replacement, and prescription medicines under medical guidance.",
     "category": "Diseases",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is mental health first aid?",
     "answer": "Mental health first aid involves recognizing signs of mental distress, listening without judgment, encouraging professional help, and ensuring immediate safety if there is risk of harm. It does not replace therapy or emergency services. In crisis, contact local emergency or suicide prevention resources right away.",
     "category": "Mental Health",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How much protein do I need?",
     "answer": "A general adult guideline is about 0.8 grams of protein per kilogram of body weight per day, with higher needs for athletes, older adults, or those recovering from illness. Good sources include legumes, dairy, eggs, fish, poultry, tofu, and nuts. People with kidney disease need individualized medical advice.",
     "category": "Nutrition",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What vaccines do adults need?",
     "answer": "Adult vaccines commonly include seasonal influenza, COVID-19 as recommended, tetanus-diphtheria boosters, shingles (for older adults), pneumococcal vaccines for eligible groups, and catch-up doses of MMR or hepatitis vaccines when indicated. Recommendations depend on age, occupation, travel, and health conditions.",
     "category": "Medicines",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to treat a sprained ankle?",
     "answer": "Use the RICE approach: Rest, Ice (short intervals), Compression with an elastic bandage, and Elevation. Over-the-counter pain relief may help if appropriate. Gradual return to activity and physical therapy support recovery. Seek care if you cannot bear weight, have severe swelling/deformity, or numbness.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What is postpartum depression?",
     "answer": "Postpartum depression is more intense and longer-lasting than the 'baby blues.' Symptoms may include persistent sadness, anxiety, difficulty bonding, sleep disturbance unrelated to baby care, and feelings of guilt or hopelessness. It is medical and treatable. Immediate help is needed for thoughts of harming oneself or the baby.",
     "category": "Pregnancy",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to help a child with constipation?",
     "answer": "Encourage fluids, fiber-rich foods like fruits and vegetables, and regular toilet routines. Limit excessive dairy if advised by a clinician. Persistent pain, blood in stool, vomiting, or constipation in infants needs pediatric evaluation. Do not give laxatives to children without professional guidance.",
     "category": "Child Care",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "I have diarrhea. What should I do?",
     "answer": "For common acute diarrhea, focus on hydration with water or oral rehydration solutions, rest, and simple foods such as bananas, rice, applesauce, and toast if tolerated. Avoid dairy, caffeine, alcohol, and greasy foods until recovery. Over-the-counter antidiarrheal medicines may help some adults but should not be used if you have high fever or bloody stools unless a clinician advises. Seek care for dehydration signs, blood in stool, severe abdominal pain, fever, diarrhea lasting more than a few days, or diarrhea in infants, older adults, or immunocompromised people.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "What causes diarrhea?",
     "answer": "Diarrhea is often caused by viral gastroenteritis, foodborne bacteria or parasites, food intolerance, medications such as antibiotics, or conditions like IBS and IBD. Contaminated water and poor hand hygiene increase infection risk. Identifying recent travel, new foods, or medication changes can help narrow causes. Persistent or severe diarrhea needs medical evaluation.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "How to treat diarrhea at home?",
     "answer": "Replace fluids and electrolytes frequently, take small sips if nauseated, and resume a bland diet as appetite returns. Handwashing helps prevent spread. Most infectious diarrhea improves within a few days. Contact a clinician promptly for bloody stools, black stools, high fever, dizziness, reduced urine, or inability to keep fluids down.",
     "category": "Symptoms",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   },
   {
     "question": "When is diarrhea an emergency?",
     "answer": "Seek urgent care for signs of severe dehydration, bloody or black stools, intense abdominal pain, high fever, confusion, fainting, or diarrhea after recent hospitalization or in very young infants. People with weakened immune systems should seek care earlier. Emergency services are needed if the person is unresponsive or cannot breathe normally.",
     "category": "First Aid",
-    "source": "MedQuAD / NIH"
+    "source": "Hand-written sample (not from MedQuAD)"
   }
 ]
