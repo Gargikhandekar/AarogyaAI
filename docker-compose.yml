@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=sqlite:///./aarogya.db
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost,http://frontend
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - DATASET_PATH=/app/dataset/medquad_sample.json
+      - FAISS_INDEX_PATH=/app/vector_db/faiss_index
+    volumes:
+      - ./dataset:/app/dataset
+      - ./vector_db:/app/vector_db
+      - backend_data:/app/backend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_data:
