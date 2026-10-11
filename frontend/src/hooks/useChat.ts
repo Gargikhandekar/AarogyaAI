@@ -25,11 +25,19 @@ export function useChat({ conversationId, onConversationCreated }: UseChatOption
     conversationId ? Number(conversationId) : undefined
   );
   const abortControllerRef = useRef<AbortController | null>(null);
+  // Set when the server creates a chat for the message being answered. The page then
+  // navigates to /chat/<id>; reloading history at that point would wipe the answer
+  // that is still streaming in, so that one load is skipped.
+  const createdChatIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (conversationId) {
       const id = Number(conversationId);
       setCurrentConversationId(id);
+      if (createdChatIdRef.current === id) {
+        createdChatIdRef.current = null;
+        return;
+      }
       loadConversation(id);
     } else {
       setMessages([]);
@@ -133,6 +141,7 @@ export function useChat({ conversationId, onConversationCreated }: UseChatOption
               if (evt.kind === 'meta') {
                 meta = evt.meta;
                 if (!currentConversationId) {
+                  createdChatIdRef.current = evt.meta.chat_id;
                   setCurrentConversationId(evt.meta.chat_id);
                   onConversationCreated?.(String(evt.meta.chat_id));
                 }
