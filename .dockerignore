@@ -1,0 +1,15 @@
+# Keep build contexts small and free of local state and secrets.
+.git
+.github
+.env
+.env.*
+**/node_modules
+**/dist
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.venv
+**/*.db
+dataset
+vector_db
+eval/results

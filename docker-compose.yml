@@ -1,37 +1,38 @@
+# docker compose up --build
+# Before the first run: python scripts/prepare_medquad.py   (creates dataset/medquad.json)
+# Ollama runs on the host (ollama serve; ollama pull llama3.1:8b), not in a container.
+
 services:
-  backend:
+  api:
     build:
       context: .
       dockerfile: backend/Dockerfile
+      args:
+        WITH_EMBEDDINGS: ${WITH_EMBEDDINGS:-false}
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # needed on Linux; built in on Mac/Windows
+    volumes:
+      - ./dataset:/app/dataset:ro
+      - ./vector_db:/app/vector_db
+      - api_data:/app/data
     ports:
       - "8000:8000"
-    env_file:
-      - .env
-    environment:
-      - DATABASE_URL=sqlite:///./aarogya.db
-      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost,http://frontend
-      - OLLAMA_BASE_URL=http://host.docker.internal:11434
-      - DATASET_PATH=/app/dataset/medquad_sample.json
-      - FAISS_INDEX_PATH=/app/vector_db/faiss_index
-    volumes:
-      - ./dataset:/app/dataset
-      - ./vector_db:/app/vector_db
-      - backend_data:/app/backend
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     restart: unless-stopped
 
   frontend:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-      args:
-        VITE_API_URL: http://localhost:8000
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
-      - backend
+      - api
     restart: unless-stopped
 
 volumes:
-  backend_data:
+  api_data:
