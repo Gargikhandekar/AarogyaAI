@@ -53,12 +53,13 @@ class Settings(BaseSettings):
     RETRIEVER: Literal["tfidf", "faiss"] = "tfidf"
     EMBEDDING_MODEL: str = "sentence-transformers/all-MiniLM-L6-v2"
     FAISS_INDEX_DIR: str = "vector_db"
-    CHUNK_SIZE: int = 1000  # characters; 0 disables chunking (one chunk per answer)
-    CHUNK_OVERLAP: int = 100
+    CHUNK_SIZE: int = 500  # characters; 0 disables chunking (one chunk per answer)
+    CHUNK_OVERLAP: int = 50
     TOP_K_RETRIEVAL: int = 4
-    # Below this top score the bot declines instead of answering. The right value depends
-    # on the retriever (TF-IDF cosine vs embedding cosine); calibrate it with eval/.
-    MIN_RELEVANCE_TFIDF: float = 0.15
+    # Below this top score the bot declines instead of answering. The right value depends on
+    # the retriever and the chunk size, so calibrate it on the dev split with eval/run_eval.py.
+    # TF-IDF 0.45 is calibrated for 500-char chunks; the FAISS value is not calibrated yet.
+    MIN_RELEVANCE_TFIDF: float = 0.45
     MIN_RELEVANCE_FAISS: float = 0.45
 
     @property
