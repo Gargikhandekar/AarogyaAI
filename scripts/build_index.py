@@ -1,11 +1,12 @@
-"""Rebuild the FAISS vector index from the dataset.
+"""Build the FAISS vector index ahead of time.
 
-The index is a build artifact and is not committed to git. Run this after
-cloning, or whenever the dataset or embedding model changes:
+The index is a build artifact and is not committed to git. With RETRIEVER=faiss the API
+builds it on first start if it is missing or stale; this script does the same up front so
+the first request is not slow:
 
-    python scripts/build_index.py
+    RETRIEVER=faiss python scripts/build_index.py
 
-Writes vector_db/faiss_index.faiss and vector_db/documents.pkl.
+Needs backend/requirements-embeddings.txt. Writes to FAISS_INDEX_DIR (default vector_db/).
 """
 
 from __future__ import annotations
@@ -16,22 +17,22 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
-os.chdir(ROOT / "backend")  # settings use paths relative to backend/
+os.environ.setdefault("RETRIEVER", "faiss")
 
-from app.rag.pipeline import rag_pipeline  # noqa: E402
+from app.rag.pipeline import RAGPipeline  # noqa: E402
 
 
 def main() -> int:
-    vector_dir = ROOT / "vector_db"
-    for name in ("faiss_index.faiss", "documents.pkl"):
-        (vector_dir / name).unlink(missing_ok=True)
-
-    rag_pipeline._load_documents()
-    rag_pipeline._try_load_faiss()
-    if not rag_pipeline._use_faiss:
-        print("FAISS index was not built; see the warning above.", file=sys.stderr)
+    pipeline = RAGPipeline()
+    pipeline.initialize()
+    if not pipeline.ready:
+        print(f"Index was not built: {pipeline.error}", file=sys.stderr)
         return 1
-    print(f"Indexed {rag_pipeline.index.ntotal} documents into {vector_dir}")
+    s = pipeline.settings
+    print(
+        f"{s.RETRIEVER} index ready: {pipeline.num_chunks} chunks "
+        f"(chunk size {s.CHUNK_SIZE}) from {pipeline.num_pairs} Q&A pairs"
+    )
     return 0
 
 

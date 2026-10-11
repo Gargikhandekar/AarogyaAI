@@ -1,0 +1,6 @@
+# Optional: dense retrieval (RETRIEVER=faiss). Pulls in PyTorch (~1-2 GB).
+# For a smaller CPU-only install, first run:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+-r requirements.txt
+sentence-transformers==3.3.1
+langchain-huggingface==0.1.2

@@ -10,8 +10,8 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from app.auth import get_current_user
-from app.database import get_db
-from app.models import Chat, Message, User
+from app.database import SessionLocal, get_db
+from app.models import Chat, User
 from app.schemas import (
     ChatDetail,
     ChatOut,
@@ -20,10 +20,10 @@ from app.schemas import (
     ChatResponse,
     FeedbackRequest,
     MessageOut,
-    SourceDocument,
 )
+from app.rag import KnowledgeBaseUnavailable, rag_pipeline
 from app.services import chat_service
-from app.utils.helpers import DISCLAIMER
+from app.utils.helpers import DISCLAIMER, logger
 
 router = APIRouter(prefix="/api", tags=["Chat"])
 
@@ -39,91 +39,94 @@ def _chat_out(chat: Chat) -> ChatOut:
     )
 
 
+def _unavailable(exc: KnowledgeBaseUnavailable) -> HTTPException:
+    return HTTPException(
+        status_code=503,
+        detail=f"The medical knowledge base is not loaded, so I can't answer right now. ({exc})",
+    )
+
+
 @router.post("/chat", response_model=ChatResponse)
 def chat(payload: ChatRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    result = chat_service.process_chat(
-        db=db,
-        user=user,
-        message=payload.message.strip(),
-        chat_id=payload.chat_id,
-        category=payload.category,
-    )
-    return ChatResponse(
-        chat_id=result["chat_id"],
-        message_id=result["message_id"],
-        answer=result["answer"],
-        confidence=result["confidence"],
-        sources=[SourceDocument(**s) for s in result["sources"]],
-        category=result["category"],
-        is_emergency=result["is_emergency"],
-        disclaimer=result["disclaimer"],
-        timestamp=result["timestamp"],
-    )
+    try:
+        result = chat_service.process_chat(
+            db=db,
+            user=user,
+            message=payload.message.strip(),
+            chat_id=payload.chat_id,
+            category=payload.category,
+        )
+    except KnowledgeBaseUnavailable as exc:
+        raise _unavailable(exc) from exc
+    return ChatResponse(**result)
 
 
+def _sse(event: dict) -> str:
+    return f"data: {json.dumps(event)}\n\n"
+
+
+# A plain `def` (not async): retrieval, the DB and the LLM client are all blocking, so
+# FastAPI runs this in a worker thread instead of stalling the event loop.
 @router.post("/chat/stream")
-async def chat_stream(
+def chat_stream(
     payload: ChatRequest,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    """True token streaming from Ollama (or fast extractive fallback)."""
-    prepared = chat_service.prepare_stream_chat(
-        db=db,
-        user=user,
-        message=payload.message.strip(),
-        chat_id=payload.chat_id,
-        category=payload.category,
-    )
-    chat_obj: Chat = prepared["chat"]
-    chat_id = chat_obj.id
+    """Server-sent events: one `meta` event (sources), `token` events, then `done`."""
+    try:
+        prepared = chat_service.prepare_stream_chat(
+            db=db,
+            user=user,
+            message=payload.message.strip(),
+            chat_id=payload.chat_id,
+            category=payload.category,
+        )
+    except KnowledgeBaseUnavailable as exc:
+        raise _unavailable(exc) from exc
 
     def event_generator():
-        # Re-bind session work inside generator carefully — use fresh session for final save
-        from app.database import SessionLocal
-
-        meta = {
-            "type": "meta",
-            "chat_id": chat_id,
-            "message_id": None,
-            "confidence": prepared["confidence"],
-            "sources": prepared["sources"],
-            "category": prepared["category"],
-            "is_emergency": prepared["is_emergency"],
-            "disclaimer": DISCLAIMER,
-        }
-        yield f"data: {json.dumps(meta)}\n\n"
-
-        chunks: list[str] = []
-        if prepared["is_emergency"]:
-            answer = prepared["answer"]
-            step = 28
-            for i in range(0, len(answer), step):
-                part = answer[i : i + step]
-                chunks.append(part)
-                yield f"data: {json.dumps({'type': 'token', 'content': part})}\n\n"
-        else:
-            for token in chat_service.stream_tokens(prepared["message"], prepared["docs"]):
-                chunks.append(token)
-                yield f"data: {json.dumps({'type': 'token', 'content': token})}\n\n"
-
-        full_answer = "".join(chunks)
-        db_local = SessionLocal()
+        yield _sse(
+            {
+                "type": "meta",
+                "chat_id": prepared.chat_id,
+                "status": prepared.early.status if prepared.early else "generating",
+                "confidence": prepared.scored[0][1] if prepared.scored else 0.0,
+                "sources": prepared.preview_sources,
+                "category": prepared.category,
+                "is_emergency": prepared.is_emergency,
+                "disclaimer": DISCLAIMER,
+            }
+        )
         try:
-            chat_row = db_local.query(Chat).filter(Chat.id == chat_id).first()
-            saved = chat_service.save_streamed_answer(
-                db=db_local,
-                chat=chat_row,
-                message=prepared["message"],
-                answer=full_answer,
-                confidence=prepared["confidence"],
-                sources=prepared["sources"],
-                category=prepared["category"],
-                is_emergency=prepared["is_emergency"],
+            if prepared.early is not None:
+                result = prepared.early
+                yield _sse({"type": "token", "content": result.answer})
+            else:
+                chunks: list[str] = []
+                for token in rag_pipeline.stream(prepared.message, prepared.scored):
+                    chunks.append(token)
+                    yield _sse({"type": "token", "content": token})
+                result = rag_pipeline.finalize("".join(chunks).strip(), prepared.scored)
+
+            # The request's session is closed once the response starts, so use a new one.
+            with SessionLocal() as db_local:
+                chat_row = db_local.get(Chat, prepared.chat_id)
+                saved = chat_service.save_assistant_message(
+                    db_local, chat_row, result, prepared.category, prepared.is_emergency
+                )
+            yield _sse(
+                {
+                    "type": "done",
+                    "message_id": saved["message_id"],
+                    "status": result.status,
+                    "answer": result.answer,
+                    "sources": result.sources,
+                }
             )
-            yield f"data: {json.dumps({'type': 'done', 'message_id': saved['message_id']})}\n\n"
-        finally:
-            db_local.close()
+        except Exception:  # noqa: BLE001 - the HTTP status is already sent; report in-band
+            logger.exception("Streaming chat failed")
+            yield _sse({"type": "error", "detail": "Something went wrong while answering."})
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 

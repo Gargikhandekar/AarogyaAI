@@ -67,22 +67,25 @@ class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=4000)
     chat_id: Optional[int] = None
     category: Optional[str] = None
-    stream: bool = False
 
 
 class SourceDocument(BaseModel):
+    id: int  # passage number, cited in the answer as [id]
     question: str
-    answer: str
+    answer: str  # the retrieved passage (chunk) text
     category: Optional[str] = None
     source: Optional[str] = None
-    score: float = 0.0
+    source_url: Optional[str] = None
+    score: float = 0.0  # retrieval cosine similarity
+    cited: bool = False  # whether the answer cites this passage
 
 
 class ChatResponse(BaseModel):
     chat_id: int
     message_id: int
     answer: str
-    confidence: float
+    status: str  # answered | declined | fallback | emergency
+    confidence: float  # top retrieval score, not a calibrated probability
     sources: List[SourceDocument] = []
     category: Optional[str] = None
     is_emergency: bool = False

@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Dict, Generator, List, Optional
+from typing import Any, Dict, List, Optional
 
 from sqlalchemy.orm import Session
 
 from app.models import Chat, Message, User
-from app.rag import rag_pipeline
+from app.rag import KnowledgeBaseUnavailable, RAGResult, rag_pipeline
+from app.rag.retrievers import ScoredDocs
 from app.utils.helpers import (
     DISCLAIMER,
     EMERGENCY_RESPONSE,
@@ -17,6 +19,12 @@ from app.utils.helpers import (
     detect_emergency,
     infer_category,
 )
+
+
+def ensure_knowledge_base() -> None:
+    """Fail before anything is saved if the dataset or index did not load."""
+    if not rag_pipeline.ready:
+        raise KnowledgeBaseUnavailable(rag_pipeline.error or "knowledge base not loaded")
 
 
 def get_or_create_chat(
@@ -42,55 +50,51 @@ def get_or_create_chat(
     return chat
 
 
-def _source_payload(docs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    return [
-        {
-            "question": d["question"],
-            "answer": d["answer"][:500],
-            "category": d.get("category"),
-            "source": d.get("source"),
-            "score": round(float(d.get("score", 0)), 4),
-        }
-        for d in docs
-    ]
+def _save_user_message(db: Session, chat: Chat, message: str, cat: str) -> None:
+    db.add(Message(chat_id=chat.id, role="user", content=message, category=cat))
+    chat.updated_at = datetime.utcnow()
+    if chat.title == "New Chat":
+        chat.title = build_chat_title(message)
+    db.commit()
 
 
-def _finalize_chat(
+def save_assistant_message(
     db: Session,
     chat: Chat,
-    message: str,
-    answer: str,
-    confidence: float,
-    sources: List[Dict[str, Any]],
+    result: RAGResult,
     cat: str,
-    is_emergency: bool,
+    is_emergency: bool = False,
 ) -> Dict[str, Any]:
     assistant = Message(
         chat_id=chat.id,
         role="assistant",
-        content=answer,
-        confidence=confidence,
+        content=result.answer,
+        confidence=result.top_score,
         category=cat,
         is_emergency=is_emergency,
-        sources=json.dumps(sources),
+        sources=json.dumps(result.sources),
     )
     db.add(assistant)
     chat.updated_at = datetime.utcnow()
-    if chat.title == "New Chat":
-        chat.title = build_chat_title(message)
     db.commit()
     db.refresh(assistant)
     return {
         "chat_id": chat.id,
         "message_id": assistant.id,
-        "answer": answer,
-        "confidence": round(float(confidence), 4),
-        "sources": sources,
+        "answer": result.answer,
+        "status": result.status,
+        "confidence": round(float(result.top_score), 4),
+        "sources": result.sources,
         "category": cat,
         "is_emergency": is_emergency,
         "disclaimer": DISCLAIMER,
         "timestamp": assistant.created_at,
     }
+
+
+def _emergency_result(reason: Optional[str]) -> RAGResult:
+    answer = EMERGENCY_RESPONSE.format(reason=reason or "This may be urgent.")
+    return RAGResult(answer=answer, status="emergency", top_score=0.0)
 
 
 def process_chat(
@@ -100,21 +104,30 @@ def process_chat(
     chat_id: Optional[int] = None,
     category: Optional[str] = None,
 ) -> Dict[str, Any]:
+    ensure_knowledge_base()
     is_emergency, reason = detect_emergency(message)
     cat = category or infer_category(message)
     chat = get_or_create_chat(db, user, chat_id, message, cat)
+    _save_user_message(db, chat, message, cat)
 
-    user_msg = Message(chat_id=chat.id, role="user", content=message, category=cat)
-    db.add(user_msg)
-    db.commit()
+    result = _emergency_result(reason) if is_emergency else rag_pipeline.answer(message)
+    return save_assistant_message(db, chat, result, cat, is_emergency)
 
-    if is_emergency:
-        answer = EMERGENCY_RESPONSE.format(reason=reason or "This may be urgent.")
-        return _finalize_chat(db, chat, message, answer, 1.0, [], cat, True)
 
-    answer, confidence, docs, cat = rag_pipeline.answer(message)
-    sources = _source_payload(docs)
-    return _finalize_chat(db, chat, message, answer, confidence, sources, cat, False)
+@dataclass
+class PreparedStream:
+    chat_id: int
+    message: str
+    category: str
+    is_emergency: bool
+    scored: ScoredDocs
+    early: Optional[RAGResult]  # set when no LLM call is needed
+
+    @property
+    def preview_sources(self) -> List[Dict[str, Any]]:
+        if self.early is not None:
+            return self.early.sources
+        return rag_pipeline.sources(self.scored, cited=set())
 
 
 def prepare_stream_chat(
@@ -123,60 +136,70 @@ def prepare_stream_chat(
     message: str,
     chat_id: Optional[int] = None,
     category: Optional[str] = None,
-) -> Dict[str, Any]:
-    """Create chat + user message, retrieve docs, return meta for streaming generation."""
+) -> PreparedStream:
+    """Save the user message and run retrieval, so sources can be sent before tokens."""
+    ensure_knowledge_base()
     is_emergency, reason = detect_emergency(message)
     cat = category or infer_category(message)
     chat = get_or_create_chat(db, user, chat_id, message, cat)
-
-    user_msg = Message(chat_id=chat.id, role="user", content=message, category=cat)
-    db.add(user_msg)
-    chat.updated_at = datetime.utcnow()
-    if chat.title == "New Chat":
-        chat.title = build_chat_title(message)
-    db.commit()
-    db.refresh(chat)
+    _save_user_message(db, chat, message, cat)
 
     if is_emergency:
-        answer = EMERGENCY_RESPONSE.format(reason=reason or "This may be urgent.")
-        return {
-            "chat": chat,
-            "is_emergency": True,
-            "answer": answer,
-            "confidence": 1.0,
-            "sources": [],
-            "category": cat,
-            "docs": [],
-            "message": message,
-        }
-
-    docs = rag_pipeline.retrieve(message)
-    confidence = float(docs[0]["score"]) if docs else 0.0
-    return {
-        "chat": chat,
-        "is_emergency": False,
-        "answer": None,
-        "confidence": confidence,
-        "sources": _source_payload(docs),
-        "category": cat or infer_category(message),
-        "docs": docs,
-        "message": message,
-    }
+        return PreparedStream(chat.id, message, cat, True, [], _emergency_result(reason))
+    scored, early = rag_pipeline.plan(message)
+    return PreparedStream(chat.id, message, cat, False, scored, early)
 
 
-def save_streamed_answer(
-    db: Session,
-    chat: Chat,
-    message: str,
-    answer: str,
-    confidence: float,
-    sources: List[Dict[str, Any]],
-    category: str,
-    is_emergency: bool = False,
-) -> Dict[str, Any]:
-    return _finalize_chat(db, chat, message, answer, confidence, sources, category, is_emergency)
+# ── History ─────────────────────────────────────────────────────────────────
+# Every query filters on user_id, so one user can never read or change another's chats.
 
 
-def stream_tokens(question: str, docs: List[Dict[str, Any]]) -> Generator[str, None, None]:
-    """Yield answer tokens (Ollama stream or extractive chunks)."""
-    yield from rag_pipeline.stream_answer(question, docs)
+def list_chats(db: Session, user: User, search: Optional[str] = None) -> List[Chat]:
+    query = db.query(Chat).filter(Chat.user_id == user.id)
+    if search:
+        query = query.filter(Chat.title.ilike(f"%{search.strip()}%"))
+    return query.order_by(Chat.updated_at.desc()).all()
+
+
+def get_chat_detail(db: Session, user: User, chat_id: int) -> Optional[Chat]:
+    return db.query(Chat).filter(Chat.id == chat_id, Chat.user_id == user.id).first()
+
+
+def rename_chat(db: Session, user: User, chat_id: int, title: str) -> Optional[Chat]:
+    chat = get_chat_detail(db, user, chat_id)
+    if chat:
+        chat.title = title
+        db.commit()
+        db.refresh(chat)
+    return chat
+
+
+def delete_chat(db: Session, user: User, chat_id: int) -> bool:
+    chat = get_chat_detail(db, user, chat_id)
+    if not chat:
+        return False
+    db.delete(chat)
+    db.commit()
+    return True
+
+
+def delete_all_chats(db: Session, user: User) -> int:
+    chats = db.query(Chat).filter(Chat.user_id == user.id).all()
+    for chat in chats:
+        db.delete(chat)
+    db.commit()
+    return len(chats)
+
+
+def set_feedback(db: Session, user: User, message_id: int, feedback: str) -> Optional[Message]:
+    msg = (
+        db.query(Message)
+        .join(Chat)
+        .filter(Message.id == message_id, Chat.user_id == user.id)
+        .first()
+    )
+    if msg:
+        msg.feedback = None if feedback == "none" else feedback
+        db.commit()
+        db.refresh(msg)
+    return msg
