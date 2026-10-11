@@ -1,0 +1,822 @@
+[
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is the outlook for Male Breast Cancer ?",
+    "qa_id": "CancerGov:0000027_2-6",
+    "doc_id": "CancerGov:0000027_2",
+    "source": "CancerGov",
+    "qtype": "outlook"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Juberg Marsidi syndrome ?",
+    "qa_id": "GARD:0003313-1",
+    "doc_id": "GARD:0003313",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "Is Anaplastic astrocytoma inherited ?",
+    "qa_id": "GARD:0000324-2",
+    "doc_id": "GARD:0000324",
+    "source": "GARD",
+    "qtype": "inheritance"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "How many people are affected by bradyopsia ?",
+    "qa_id": "GHR:0000134-2",
+    "doc_id": "GHR:0000134",
+    "source": "GHR",
+    "qtype": "frequency"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Sneddon syndrome ?",
+    "qa_id": "GARD:0005681-2",
+    "doc_id": "GARD:0005681",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) N-acetylglutamate synthase deficiency ?",
+    "qa_id": "GHR:0000711-1",
+    "doc_id": "GHR:0000711",
+    "source": "GHR",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Uncombable hair syndrome ?",
+    "qa_id": "GARD:0006276-2",
+    "doc_id": "GARD:0006276",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "How to diagnose Ehlers-Danlos syndrome, dermatosparaxis type ?",
+    "qa_id": "GARD:0002055-5",
+    "doc_id": "GARD:0002055",
+    "source": "GARD",
+    "qtype": "exams and tests"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Thyrotoxic periodic paralysis ?",
+    "qa_id": "GARD:0006101-1",
+    "doc_id": "GARD:0006101",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for congenital myasthenic syndrome ?",
+    "qa_id": "GHR:0000235-5",
+    "doc_id": "GHR:0000235",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for gyrate atrophy of the choroid and retina ?",
+    "qa_id": "GHR:0000444-5",
+    "doc_id": "GHR:0000444",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "Is Split hand split foot nystagmus inherited ?",
+    "qa_id": "GARD:0005812-3",
+    "doc_id": "GARD:0005812",
+    "source": "GARD",
+    "qtype": "inheritance"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) deafness-dystonia-optic neuronopathy syndrome ?",
+    "qa_id": "GHR:0000274-1",
+    "doc_id": "GHR:0000274",
+    "source": "GHR",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Chronic Eosinophilic Leukemia ?",
+    "qa_id": "CancerGov:0000013_2-2",
+    "doc_id": "CancerGov:0000013_2",
+    "source": "CancerGov",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "How to diagnose What I need to know about Diarrhea ?",
+    "qa_id": "NIDDK:0000127-6",
+    "doc_id": "NIDDK:0000127",
+    "source": "NIDDK",
+    "qtype": "exams and tests"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Mycosis Fungoides and the Szary Syndrome ?",
+    "qa_id": "CancerGov:0000004_4-1",
+    "doc_id": "CancerGov:0000004_4",
+    "source": "CancerGov",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for Opitz G/BBB syndrome ?",
+    "qa_id": "GHR:0000752-5",
+    "doc_id": "GHR:0000752",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the genetic changes related to Meige disease ?",
+    "qa_id": "GHR:0000644-3",
+    "doc_id": "GHR:0000644",
+    "source": "GHR",
+    "qtype": "genetic changes"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Hepatitis B ?",
+    "qa_id": "MPlusHealthTopics:0000461-1",
+    "doc_id": "MPlusHealthTopics:0000461",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Tick Bites ?",
+    "qa_id": "MPlusHealthTopics:0000893-1",
+    "doc_id": "MPlusHealthTopics:0000893",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for Fragile X syndrome ?",
+    "qa_id": "GARD:0002417-6",
+    "doc_id": "GARD:0002417",
+    "source": "GARD",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Pyknoachondrogenesis ?",
+    "qa_id": "GARD:0005211-1",
+    "doc_id": "GARD:0005211",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Genital Warts ?",
+    "qa_id": "MPlusHealthTopics:0000401-1",
+    "doc_id": "MPlusHealthTopics:0000401",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Ectopic Kidney ?",
+    "qa_id": "NIDDK:0000141-1",
+    "doc_id": "NIDDK:0000141",
+    "source": "NIDDK",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Bietti crystalline corneoretinal dystrophy ?",
+    "qa_id": "GARD:0000714-1",
+    "doc_id": "GARD:0000714",
+    "source": "GARD",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for methylmalonic acidemia with homocystinuria ?",
+    "qa_id": "GHR:0000651-5",
+    "doc_id": "GHR:0000651",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "what research (or clinical trials) is being done for Langerhans Cell Histiocytosis ?",
+    "qa_id": "CancerGov:0000023_1-8",
+    "doc_id": "CancerGov:0000023_1",
+    "source": "CancerGov",
+    "qtype": "research"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the genetic changes related to neurohypophyseal diabetes insipidus ?",
+    "qa_id": "GHR:0000726-3",
+    "doc_id": "GHR:0000726",
+    "source": "GHR",
+    "qtype": "genetic changes"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Benign schwannoma ?",
+    "qa_id": "GARD:0000693-1",
+    "doc_id": "GARD:0000693",
+    "source": "GARD",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "Is primary spontaneous pneumothorax inherited ?",
+    "qa_id": "GHR:0000825-4",
+    "doc_id": "GHR:0000825",
+    "source": "GHR",
+    "qtype": "inheritance"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Maturity-onset diabetes of the young, type 5 ?",
+    "qa_id": "GARD:0003833-1",
+    "doc_id": "GARD:0003833",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the genetic changes related to spastic paraplegia type 8 ?",
+    "qa_id": "GHR:0000932-3",
+    "doc_id": "GHR:0000932",
+    "source": "GHR",
+    "qtype": "genetic changes"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for Klippel-Trenaunay syndrome ?",
+    "qa_id": "GHR:0000563-5",
+    "doc_id": "GHR:0000563",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the treatments for aspartylglucosaminuria ?",
+    "qa_id": "GHR:0000074-5",
+    "doc_id": "GHR:0000074",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "How many people are affected by myopathy with deficiency of iron-sulfur cluster assembly enzyme ?",
+    "qa_id": "GHR:0000706-2",
+    "doc_id": "GHR:0000706",
+    "source": "GHR",
+    "qtype": "frequency"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Loeys-Dietz syndrome type 4 ?",
+    "qa_id": "GARD:0003659-1",
+    "doc_id": "GARD:0003659",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Infertility ?",
+    "qa_id": "MPlusHealthTopics:0000514-1",
+    "doc_id": "MPlusHealthTopics:0000514",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the genetic changes related to head and neck squamous cell carcinoma ?",
+    "qa_id": "GHR:0000449-3",
+    "doc_id": "GHR:0000449",
+    "source": "GHR",
+    "qtype": "genetic changes"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What is (are) Bone Diseases ?",
+    "qa_id": "MPlusHealthTopics:0000114-1",
+    "doc_id": "MPlusHealthTopics:0000114",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "dev",
+    "expected": "answer",
+    "question": "What are the symptoms of Nance-Horan syndrome ?",
+    "qa_id": "GARD:0004310-2",
+    "doc_id": "GARD:0004310",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "What is the capital of France?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "How do I fix a flat bicycle tyre?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "Who won the cricket world cup in 2011?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "Write a Python function to reverse a string."
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "What is the best laptop for programming?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "How do I make paneer butter masala?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "What is the phone number of AIIMS Delhi?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "Which hospital in Pune has the shortest waiting time?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "How much does health insurance cost in India?"
+  },
+  {
+    "split": "dev",
+    "expected": "decline",
+    "question": "What will the weather be like tomorrow?"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for phosphoribosylpyrophosphate synthetase superactivity ?",
+    "qa_id": "GHR:0000796-5",
+    "doc_id": "GHR:0000796",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "How to diagnose Retinoblastoma ?",
+    "qa_id": "CancerGov:0000018_1-5",
+    "doc_id": "CancerGov:0000018_1",
+    "source": "CancerGov",
+    "qtype": "exams and tests"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the symptoms of Microcystic adnexal carcinoma ?",
+    "qa_id": "GARD:0004034-2",
+    "doc_id": "GARD:0004034",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What to do for Medullary Sponge Kidney ?",
+    "qa_id": "NIDDK:0000160-12",
+    "doc_id": "NIDDK:0000160",
+    "source": "NIDDK",
+    "qtype": "considerations"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) Aneurysms ?",
+    "qa_id": "MPlusHealthTopics:0000036-1",
+    "doc_id": "MPlusHealthTopics:0000036",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "How many people are affected by Coats plus syndrome ?",
+    "qa_id": "GHR:0000193-2",
+    "doc_id": "GHR:0000193",
+    "source": "GHR",
+    "qtype": "frequency"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "Do you have information about Calcium",
+    "qa_id": "MPlusHealthTopics:0000139-1",
+    "doc_id": "MPlusHealthTopics:0000139",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "How to diagnose Periodic fever, aphthous stomatitis, pharyngitis and adenitis ?",
+    "qa_id": "GARD:0004813-4",
+    "doc_id": "GARD:0004813",
+    "source": "GARD",
+    "qtype": "exams and tests"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) Chondrodysplasia punctata 1, X-linked recessive ?",
+    "qa_id": "GARD:0001169-1",
+    "doc_id": "GARD:0001169",
+    "source": "GARD",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Ledderhose disease ?",
+    "qa_id": "GARD:0003522-3",
+    "doc_id": "GARD:0003522",
+    "source": "GARD",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the symptoms of Wilson-Turner syndrome ?",
+    "qa_id": "GARD:0006451-1",
+    "doc_id": "GARD:0006451",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) Muscle Disorders ?",
+    "qa_id": "MPlusHealthTopics:0000630-1",
+    "doc_id": "MPlusHealthTopics:0000630",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What to do for Kidney Dysplasia ?",
+    "qa_id": "NIDDK:0000154-13",
+    "doc_id": "NIDDK:0000154",
+    "source": "NIDDK",
+    "qtype": "considerations"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for triple X syndrome ?",
+    "qa_id": "GHR:0000995-5",
+    "doc_id": "GHR:0000995",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "How many people are affected by Stve-Wiedemann syndrome ?",
+    "qa_id": "GHR:0000957-2",
+    "doc_id": "GHR:0000957",
+    "source": "GHR",
+    "qtype": "frequency"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) Infectious arthritis ?",
+    "qa_id": "GARD:0003202-1",
+    "doc_id": "GARD:0003202",
+    "source": "GARD",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Parasites - Leishmaniasis ?",
+    "qa_id": "CDC:0000261-6",
+    "doc_id": "CDC:0000261",
+    "source": "CDC",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) Medicare and Continuing Care ?",
+    "qa_id": "NIHSeniorHealth:0000045-10",
+    "doc_id": "NIHSeniorHealth:0000045",
+    "source": "NIHSeniorHealth",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Prostate Cancer ?",
+    "qa_id": "NIHSeniorHealth:0000058-4",
+    "doc_id": "NIHSeniorHealth:0000058",
+    "source": "NIHSeniorHealth",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "Do you have information about Coping with Disasters",
+    "qa_id": "MPlusHealthTopics:0000234-1",
+    "doc_id": "MPlusHealthTopics:0000234",
+    "source": "MPlusHealthTopics",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) Good syndrome ?",
+    "qa_id": "GARD:0002649-1",
+    "doc_id": "GARD:0002649",
+    "source": "GARD",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Tourette syndrome ?",
+    "qa_id": "GHR:0000985-5",
+    "doc_id": "GHR:0000985",
+    "source": "GHR",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "what research (or clinical trials) is being done for National Hormone and Pituitary Program (NHPP): Information for People Treated with Pituitary Human Growth Hormone (Comprehensive Report) ?",
+    "qa_id": "NIDDK:0000011-13",
+    "doc_id": "NIDDK:0000011",
+    "source": "NIDDK",
+    "qtype": "research"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "Who is at risk for Diabetes? ?",
+    "qa_id": "NIHSeniorHealth:0000015-2",
+    "doc_id": "NIHSeniorHealth:0000015",
+    "source": "NIHSeniorHealth",
+    "qtype": "susceptibility"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the symptoms of Eisenmenger syndrome ?",
+    "qa_id": "GARD:0002066-2",
+    "doc_id": "GARD:0002066",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Atherosclerosis ?",
+    "qa_id": "NHLBI:0000012-7",
+    "doc_id": "NHLBI:0000012",
+    "source": "NHLBI",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is the outlook for Dandy-Walker Syndrome ?",
+    "qa_id": "NINDS:0000094-3",
+    "doc_id": "NINDS:0000094",
+    "source": "NINDS",
+    "qtype": "outlook"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is the outlook for AIDS-Related Lymphoma ?",
+    "qa_id": "CancerGov:0000004_3-4",
+    "doc_id": "CancerGov:0000004_3",
+    "source": "CancerGov",
+    "qtype": "outlook"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the symptoms of Tetra-amelia syndrome ?",
+    "qa_id": "GARD:0006041-2",
+    "doc_id": "GARD:0006041",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What is (are) anencephaly ?",
+    "qa_id": "GHR:0000057-1",
+    "doc_id": "GHR:0000057",
+    "source": "GHR",
+    "qtype": "information"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the genetic changes related to color vision deficiency ?",
+    "qa_id": "GHR:0000204-3",
+    "doc_id": "GHR:0000204",
+    "source": "GHR",
+    "qtype": "genetic changes"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the symptoms of Thompson Baraitser syndrome ?",
+    "qa_id": "GARD:0006066-1",
+    "doc_id": "GARD:0006066",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "Is Alport syndrome inherited ?",
+    "qa_id": "GARD:0000261-4",
+    "doc_id": "GARD:0000261",
+    "source": "GARD",
+    "qtype": "inheritance"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the symptoms of Cardioauditory syndrome of Sanchez Cascos ?",
+    "qa_id": "GARD:0000942-1",
+    "doc_id": "GARD:0000942",
+    "source": "GARD",
+    "qtype": "symptoms"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Familial hypercholesterolemia ?",
+    "qa_id": "GARD:0002260-4",
+    "doc_id": "GARD:0002260",
+    "source": "GARD",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "Is ophthalmo-acromelic syndrome inherited ?",
+    "qa_id": "GHR:0000751-4",
+    "doc_id": "GHR:0000751",
+    "source": "GHR",
+    "qtype": "inheritance"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "How many people are affected by alpha-methylacyl-CoA racemase deficiency ?",
+    "qa_id": "GHR:0000043-2",
+    "doc_id": "GHR:0000043",
+    "source": "GHR",
+    "qtype": "frequency"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What are the treatments for Colorectal Cancer ?",
+    "qa_id": "NIHSeniorHealth:0000010-25",
+    "doc_id": "NIHSeniorHealth:0000010",
+    "source": "NIHSeniorHealth",
+    "qtype": "treatment"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "How many people are affected by Bowen-Conradi syndrome ?",
+    "qa_id": "GHR:0000133-2",
+    "doc_id": "GHR:0000133",
+    "source": "GHR",
+    "qtype": "frequency"
+  },
+  {
+    "split": "test",
+    "expected": "answer",
+    "question": "What causes Anemia in Chronic Kidney Disease ?",
+    "qa_id": "NIDDK:0000138-4",
+    "doc_id": "NIDDK:0000138",
+    "source": "NIDDK",
+    "qtype": "causes"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "What is the tallest mountain in the world?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "How do I change a car's engine oil?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "Explain how a blockchain works."
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "What is the plot of the movie Inception?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "How do I bake sourdough bread?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "Who is the prime minister of Japan?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "Can you book me a doctor's appointment for Monday?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "What is the stock price of Apollo Hospitals today?"
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "Translate 'good morning' into Spanish."
+  },
+  {
+    "split": "test",
+    "expected": "decline",
+    "question": "How many players are on a football team?"
+  }
+]

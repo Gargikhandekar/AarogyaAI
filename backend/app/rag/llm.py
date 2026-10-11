@@ -12,13 +12,9 @@ from langchain_ollama import ChatOllama
 from app.utils.config import Settings
 
 
-class LLMUnavailable(RuntimeError):
-    """Ollama is not reachable or the configured model is not pulled."""
-
-
-def build_chat_model(settings: Settings, model: Optional[str] = None) -> BaseChatModel:
+def build_chat_model(settings: Settings, model: Optional[str] = None, **overrides) -> BaseChatModel:
     timeout = httpx.Timeout(settings.LLM_READ_TIMEOUT, connect=settings.LLM_CONNECT_TIMEOUT)
-    return ChatOllama(
+    params = dict(
         model=model or settings.OLLAMA_MODEL,
         base_url=settings.OLLAMA_BASE_URL,
         temperature=settings.LLM_TEMPERATURE,
@@ -27,6 +23,7 @@ def build_chat_model(settings: Settings, model: Optional[str] = None) -> BaseCha
         keep_alive="30m",
         client_kwargs={"timeout": timeout},
     )
+    return ChatOllama(**{**params, **overrides})
 
 
 class OllamaHealth:

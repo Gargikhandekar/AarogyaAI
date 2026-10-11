@@ -1,0 +1,27 @@
+{
+  "_comment": "Hand-written questions the bot should decline: off-topic, or medical-sounding but not answerable from MedQuAD.",
+  "dev": [
+    "What is the capital of France?",
+    "How do I fix a flat bicycle tyre?",
+    "Who won the cricket world cup in 2011?",
+    "Write a Python function to reverse a string.",
+    "What is the best laptop for programming?",
+    "How do I make paneer butter masala?",
+    "What is the phone number of AIIMS Delhi?",
+    "Which hospital in Pune has the shortest waiting time?",
+    "How much does health insurance cost in India?",
+    "What will the weather be like tomorrow?"
+  ],
+  "test": [
+    "What is the tallest mountain in the world?",
+    "How do I change a car's engine oil?",
+    "Explain how a blockchain works.",
+    "What is the plot of the movie Inception?",
+    "How do I bake sourdough bread?",
+    "Who is the prime minister of Japan?",
+    "Can you book me a doctor's appointment for Monday?",
+    "What is the stock price of Apollo Hospitals today?",
+    "Translate 'good morning' into Spanish.",
+    "How many players are on a football team?"
+  ]
+}
