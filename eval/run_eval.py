@@ -209,7 +209,7 @@ def fmt(v) -> str:
 def write_table(path: Path, header: List[str], rows: List[List]) -> str:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path.with_suffix(".csv"), "w", newline="") as f:
-        csv.writer(f).writerows([header, *rows])
+        csv.writer(f, lineterminator="\n").writerows([header, *rows])
     lines = ["| " + " | ".join(header) + " |", "|" + "---|" * len(header)]
     lines += ["| " + " | ".join(fmt(c) for c in r) + " |" for r in rows]
     table = "\n".join(lines) + "\n"
@@ -270,11 +270,10 @@ def main() -> int:
         for model in args.models:
             print(f"  Generating with {model} ...")
             settings_m = settings.model_copy(update={"OLLAMA_MODEL": model})
-            gen_pipeline = RAGPipeline(settings_m, llm=build_chat_model(settings_m, model))
-            gen_pipeline.retriever = pipeline.retriever
+            pipeline.use_llm(build_chat_model(settings_m, model))
             judge_name = args.judge_model or args.models[0]
             judge = build_chat_model(settings_m, judge_name, format="json", temperature=0)
-            rows_g = run_generation(gen_pipeline, judge, items)
+            rows_g = run_generation(pipeline, judge, items)
             g = generation_metrics(rows_g)
             generation_rows.append(
                 [model, chunk_label(size), judge_name, g["answered"], g["faithful"], g["judged"],

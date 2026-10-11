@@ -51,9 +51,13 @@ class RAGPipeline:
         self.num_pairs = 0
         self.num_chunks = 0
         self.error: Optional[str] = "not initialised"
-        self.llm = llm or build_chat_model(self.settings)
         self.llm_health = OllamaHealth(self.settings)
-        self._chain = RAG_PROMPT | self.llm | StrOutputParser()
+        self.use_llm(llm or build_chat_model(self.settings))
+
+    def use_llm(self, llm: BaseChatModel) -> None:
+        """Swap the chat model (tests use a fake one; eval compares Ollama models)."""
+        self.llm = llm
+        self._chain = RAG_PROMPT | llm | StrOutputParser()
 
     # ── Setup ────────────────────────────────────────────────────────────────
 
