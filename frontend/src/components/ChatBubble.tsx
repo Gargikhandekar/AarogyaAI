@@ -86,37 +86,39 @@ export default function ChatBubble({
 
         {isAssistant && !isStreaming && message.content && (
           <>
-            {confidence !== null && (
-              <div className="mt-1.5 flex items-center gap-2 text-xs text-slate-500">
-                <span
-                  className={`px-2 py-0.5 rounded-full ${
-                    confidence >= 0.8
-                      ? 'bg-accent/10 text-accent-600'
-                      : confidence >= 0.5
-                      ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                      : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
-                  }`}
-                >
-                  Confidence: {Math.round(confidence * 100)}%
-                </span>
-              </div>
-            )}
-
             {message.sources && message.sources.length > 0 && (
               <div className="mt-2 space-y-2 w-full">
-                <p className="text-xs font-medium text-slate-500">Sources:</p>
+                <p className="text-xs font-medium text-slate-500">
+                  Sources (MedQuAD passages{confidence !== null ? `, best match score ${confidence.toFixed(2)}` : ''}):
+                </p>
                 {message.sources.map((source, i) => (
                   <div
-                    key={i}
-                    className="text-xs p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700"
+                    key={source.id ?? i}
+                    className={`text-xs p-2 rounded-lg border ${
+                      source.cited === false
+                        ? 'bg-transparent border-dashed border-slate-200 dark:border-slate-700 opacity-70'
+                        : 'bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700'
+                    }`}
                   >
                     <p className="font-medium text-slate-700 dark:text-slate-200 truncate">
-                      Q: {source.question}
+                      [{source.id ?? i + 1}] {source.question}
                     </p>
-                    {source.source && (
-                      <p className="text-slate-500 mt-0.5 truncate">Source: {source.source}</p>
-                    )}
-                    <p className="text-primary mt-0.5">Relevance: {Math.round(source.score * 100)}%</p>
+                    <p className="text-slate-500 mt-0.5 truncate">
+                      {source.source_url ? (
+                        <a
+                          href={source.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          {source.source || 'Source'}
+                        </a>
+                      ) : (
+                        source.source
+                      )}
+                      {' · '}score {source.score.toFixed(2)}
+                      {source.cited === false && ' · retrieved, not cited'}
+                    </p>
                   </div>
                 ))}
               </div>

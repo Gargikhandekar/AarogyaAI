@@ -18,6 +18,8 @@ import type {
   Hospital,
   AdminStats,
   AdminLog,
+  AnswerStatus,
+  SourceDocument,
 } from '@/types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -56,10 +58,21 @@ export const authApi = {
   me: () => api.get<User>('/api/auth/me'),
 };
 
+/** An error the server reported (e.g. 503 "knowledge base not loaded"); shown as-is. */
+export class ServerError extends Error {}
+
+/** Pull the FastAPI `detail` message out of an axios error, if there is one. */
+export function errorDetail(err: unknown): string | undefined {
+  if (err instanceof ServerError) return err.message;
+  const detail = (err as AxiosError<{ detail?: unknown }>)?.response?.data?.detail;
+  return typeof detail === 'string' ? detail : undefined;
+}
+
 export type StreamMeta = {
   type: 'meta';
   chat_id: number;
   message_id?: number | null;
+  status: AnswerStatus;
   confidence: number;
   sources: ChatResponse['sources'];
   category?: string | null;
@@ -75,7 +88,7 @@ export const chatApi = {
   ): AsyncGenerator<
     | { kind: 'meta'; meta: StreamMeta }
     | { kind: 'token'; content: string }
-    | { kind: 'done'; message_id?: number },
+    | { kind: 'done'; message_id?: number; status?: AnswerStatus; sources?: SourceDocument[] },
     void,
     unknown
   > {
@@ -90,7 +103,11 @@ export const chatApi = {
       signal,
     });
 
-    if (!response.ok) throw new Error(`Stream failed: ${response.statusText}`);
+    if (!response.ok) {
+      const body = await response.json().catch(() => null);
+      if (typeof body?.detail === 'string') throw new ServerError(body.detail);
+      throw new Error(`Stream failed: ${response.statusText}`);
+    }
     const reader = response.body?.getReader();
     if (!reader) throw new Error('No response body');
 
@@ -107,17 +124,25 @@ export const chatApi = {
       for (const line of lines) {
         if (!line.startsWith('data: ')) continue;
         const payload = line.slice(6);
+        let parsed;
         try {
-          const parsed = JSON.parse(payload);
-          if (parsed.type === 'meta') yield { kind: 'meta', meta: parsed };
-          else if (parsed.type === 'token' && parsed.content) {
-            yield { kind: 'token', content: parsed.content };
-          } else if (parsed.type === 'done') {
-            yield { kind: 'done', message_id: parsed.message_id };
-            return;
-          }
+          parsed = JSON.parse(payload);
         } catch {
-          /* ignore partial JSON */
+          continue; /* ignore partial JSON */
+        }
+        if (parsed.type === 'meta') yield { kind: 'meta', meta: parsed };
+        else if (parsed.type === 'token' && parsed.content) {
+          yield { kind: 'token', content: parsed.content };
+        } else if (parsed.type === 'error') {
+          throw new ServerError(parsed.detail || 'Something went wrong while answering.');
+        } else if (parsed.type === 'done') {
+          yield {
+            kind: 'done',
+            message_id: parsed.message_id,
+            status: parsed.status,
+            sources: parsed.sources,
+          };
+          return;
         }
       }
     }

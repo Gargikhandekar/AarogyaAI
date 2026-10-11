@@ -36,13 +36,14 @@ export interface AuthResponse {
 // ── Chat ────────────────────────────────────────────────────────────────────
 
 export interface SourceDocument {
-  id?: number; // citation number used as [n] in the answer
+  id: number; // passage number, cited in the answer as [n]
   question: string;
   answer: string;
   category?: string | null;
   source?: string | null;
   source_url?: string | null;
-  score: number;
+  score: number; // retrieval cosine similarity
+  cited?: boolean; // whether the answer cites this passage
 }
 
 export interface Message {
@@ -66,10 +67,13 @@ export interface ChatRequest {
   category?: string | null;
 }
 
+export type AnswerStatus = 'answered' | 'declined' | 'fallback' | 'emergency' | 'generating';
+
 export interface ChatResponse {
   chat_id: number;
   message_id: number;
   answer: string;
+  status: AnswerStatus;
   confidence: number;
   sources: SourceDocument[];
   category?: string | null;

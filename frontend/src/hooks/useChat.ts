@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { chatApi, historyApi } from '@/services/api';
+import { chatApi, historyApi, errorDetail, ServerError } from '@/services/api';
 import type { Message, Conversation, SourceDocument } from '@/types';
 
 interface UseChatOptions {
@@ -127,6 +127,7 @@ export function useChat({ conversationId, onConversationCreated }: UseChatOption
               disclaimer: string;
             } | null = null;
             let doneMessageId: number | undefined;
+            let finalSources: SourceDocument[] | undefined;
 
             for await (const evt of chatApi.stream(request, abortControllerRef.current.signal)) {
               if (evt.kind === 'meta') {
@@ -144,6 +145,7 @@ export function useChat({ conversationId, onConversationCreated }: UseChatOption
                 );
               } else if (evt.kind === 'done') {
                 doneMessageId = evt.message_id;
+                finalSources = evt.sources; // includes which passages were cited
               }
             }
 
@@ -152,13 +154,15 @@ export function useChat({ conversationId, onConversationCreated }: UseChatOption
                 id: doneMessageId ?? meta.message_id ?? Date.now(),
                 content: fullContent,
                 confidence: meta.confidence,
-                sources: meta.sources,
+                sources: finalSources ?? meta.sources,
                 is_emergency: meta.is_emergency,
                 disclaimer: meta.disclaimer,
               });
             }
           } catch (streamErr) {
             if ((streamErr as Error).name === 'AbortError') return;
+            // The server answered with an error: retrying without streaming would repeat it.
+            if (streamErr instanceof ServerError) throw streamErr;
             const { data } = await chatApi.send(request);
             applyAssistant(tempAssistantId, {
               id: data.message_id,
@@ -188,8 +192,8 @@ export function useChat({ conversationId, onConversationCreated }: UseChatOption
             onConversationCreated?.(String(data.chat_id));
           }
         }
-      } catch {
-        setError('Failed to send message. Please try again.');
+      } catch (err) {
+        setError(errorDetail(err) ?? 'Failed to send message. Please try again.');
         setMessages((prev) => prev.filter((m) => m.id !== tempAssistantId));
       } finally {
         setIsStreaming(false);
